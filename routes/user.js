@@ -3,8 +3,55 @@ const bcrypt = require('bcryptjs')
 const auth = require('../middleware/auth')
 const User = require('../models/user')
 const Project = require('../models/project')
+const Company = require('../models/company')
+const Department = require('../models/department')
 
 const router = Router()
+
+router.get('/', auth, async (req, res) => {
+    try {
+        let users = await User.findAll({
+            attributes: ['id', 'name', 'email'],
+            include: [
+                {model: Company, attributes: ['id', 'name']},
+                {model: Department, attributes: ['id', 'name']},
+                {
+                    model: Project,
+                    attributes: ['id', 'name'],
+                    through: {
+                        attributes: []
+                    }
+                }
+            ]
+        })
+        res.status(200).json(users)
+    } catch (e) {
+        res.status(500).json({error: 'Something went wrong'})
+    }
+})
+
+router.get('/:id', auth, async (req, res) => {
+    try {
+        let {id} = req.params
+        let user = await User.findByPk(id, {
+            attributes: ['id', 'name', 'email'],
+            include: [
+                {model: Company, attributes: ['id', 'name']},
+                {model: Department, attributes: ['id', 'name']},
+                {
+                    model: Project,
+                    attributes: ['id', 'name'],
+                    through: {
+                        attributes: []
+                    }
+                }
+            ]           
+        })
+        res.status(200).json(user)
+    } catch (e) {
+        res.status(500).json({error: 'Something went wrong'})
+    }
+})
 
 router.post('/', auth, async (req, res) => {
     try {

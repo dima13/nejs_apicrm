@@ -20,7 +20,12 @@ const Company = sequelize.define("Company", {
 })
 
 Company.hasMany(User)
+User.belongsTo(Company)
+
 Company.hasMany(Department)
+Department.belongsTo(Company)
+
 Company.hasMany(Project)
+Project.belongsTo(Company)
 
 module.exports = Company

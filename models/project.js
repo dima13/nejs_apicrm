@@ -16,5 +16,4 @@ const Project = sequelize.define("Project", {
     tableName: 'shevtsov_projects'
 })
 
-//Project.belongsToMany(User, {through: ProjectUsers})
 module.exports = Project

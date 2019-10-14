@@ -33,4 +33,5 @@ const User = sequelize.define("User", {
 })
 
 User.belongsToMany(Project, {through: ProjectUsers})
+Project.belongsToMany(User, {through: ProjectUsers})
 module.exports = User

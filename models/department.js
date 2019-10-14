@@ -18,5 +18,6 @@ const Department = sequelize.define("Department", {
 })
 
 Department.hasMany(User)
+User.belongsTo(Department)
 
 module.exports = Department
